@@ -1,6 +1,6 @@
-// This file is part of "juc"
+// This file is part of "rslog"
 // Under the MIT License
-// Copyright (c) Junon, Antonin Hérault
+// Copyright (c) Antonin Hérault
 
 use std::fmt;
 
