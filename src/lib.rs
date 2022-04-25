@@ -73,3 +73,40 @@ fn test() {
 
     logger.interpret();
 }
+
+#[test]
+fn for_example() {
+    use crate::*;
+    use crate::level::LogLevel;
+    use crate::log::Log;
+    use crate::logger::Logger;
+
+    // code_line[2] is invalid  !
+    let code_line: Vec<&str> = vec!["fn", "main", "@", "{", "}"];
+
+    let mut logger = Logger::new();
+
+    let logs = vec![
+        Log::info("Working directory : /Documents/somewhere".to_string()),
+
+        // so, we throw an error
+        Log::new(
+            LogLevel::Error,
+            "Unexpected token".to_string(),
+            format!(
+                "{}Token '{}' found but not expected", 
+                line_to_string::<&str>(&code_line, 3), // not index, but position
+                code_line[2]
+            ),
+        )
+        .add_cause(&source_to_string("foo.rs".to_string(), 0, 2)) // 1st line, 3rd token
+        .add_hint(format!("Add a parameters list after '{}'", code_line[1]))
+    ];
+
+    for log in logs {
+        logger.add_log(log);
+    }
+
+    // Print all logs and kill the program process if at least one log is an error
+    logger.interpret();
+}
