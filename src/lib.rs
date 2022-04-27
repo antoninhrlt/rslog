@@ -7,7 +7,7 @@ pub mod log;
 pub mod logger;
 
 /// Transform a line of tokens to a printable string for a log \
-/// `token_i` is token to highlight iterator
+/// `token_i` is token to highlight index
 pub fn line_to_string<Token>(line: &Vec<Token>, token_i: usize) -> String 
 where Token: ToString
 {
